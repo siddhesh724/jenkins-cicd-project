@@ -20,8 +20,10 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage ('checkstyle analyisis') {
-            sh 'mvn checkstyle:checkstyle'
+        stage ('checkstyle analysis') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
         }
     }
 }
