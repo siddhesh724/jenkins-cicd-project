@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage ('fetch the') {
             steps{
-                git branch: 'vp-rem',url: 'https://github.com/devopshydclub/vprofile-project.git'
+                git branch: 'main',url: 'https://github.com/siddhesh724/jenkins-cicd-project.git'
             }
         }
         stage ('Build') {
