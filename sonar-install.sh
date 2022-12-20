@@ -1,4 +1,5 @@
 #!/bin/bash
+# ubuntu 18.04 on t2.medium
 cp /etc/sysctl.conf /root/sysctl.conf_backup
 cat <<EOT> /etc/sysctl.conf
 vm.max_map_count=262144
