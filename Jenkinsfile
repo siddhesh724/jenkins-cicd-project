@@ -20,5 +20,8 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage ('checkstyle analyisis') {
+            sh 'mvn checkstyle:checkstyle'
+        }
     }
 }
