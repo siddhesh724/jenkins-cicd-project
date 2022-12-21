@@ -8,6 +8,12 @@ pipeline {
         jdk "OracleJDK8"
         maven "MAVEN_LOCAL"
     }
+    environment {
+        registryCredential = 'ecr:us-east-1:awscreds'
+        appRegistry = "573421063144.dkr.ecr.us-east-1.amazonaws.com/vprofileappimg"
+        vprofileRegistry = "https://573421063144.dkr.ecr.us-east-1.amazonaws.com"
+    }
+
     stages {
         stage ('fetch the') {
             steps{
@@ -56,26 +62,30 @@ pipeline {
                 }
             }
         }
-        stage('nexus artifact upload') {
-            steps {
-                nexusArtifactUploader(
-                nexusVersion: 'nexus3',
-                protocol: 'http',
-                nexusUrl: '172.31.73.82:8081',
-                groupId: 'QA',
-                version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
-                repository: 'vprofile',
-                credentialsId: 'nexus-login',
-                artifacts: [
-                  [artifactId: 'vproapp',
-                  classifier: '',
-                  file: 'target/vprofile-v2.war',
-                  type: 'war']
-                ]
-                )
+        
+        stage('Build Image') {
+            steps{
+                script{
+                    git checkout -b CI-docker
+                    dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "dockerfile")
+                }
             }
         }
-        
+
+        stage('Upload App image') {
+            steps{
+                script {
+
+                   docker.withRegistry( vprofileRegistry, registryCredential ) {
+                     dockerImage.push("$BUILD_NUMBER")
+                     dockerImage.push('latest')
+                  }
+                }
+            }
+        }
+
+
+
     }
     post {
         always {
