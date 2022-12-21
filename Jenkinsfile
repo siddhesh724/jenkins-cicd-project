@@ -63,7 +63,7 @@ pipeline {
                 repository: 'vprofile',
                 credentialsId: 'nexus-login',
                 artifacts: [
-                  [artifactId: vproapp,
+                  [artifactId: 'vproapp',
                   classifier: '',
                   file: 'target/vprofile-v2.war',
                   type: 'war']
