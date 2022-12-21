@@ -76,7 +76,7 @@ pipeline {
     post{
         always {
             echo 'slack notification'
-            slackSend channel: '#jenkinscicd', color: 'slackSend color: "#439FE0", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', failOnError: true, message: '"started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"', teamDomain: 'siddhesh-world', tokenCredentialId: 'slacklogin-siddhesh'
+            slackSend channel: '#jenkinscicd', color: 'slackSend color: "#439FE0", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', failOnError: true, message: 'started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)', teamDomain: 'siddhesh-world', tokenCredentialId: 'slacklogin-siddhesh'
         }
     }
     
