@@ -52,6 +52,25 @@ pipeline {
                 }
             }
         }
+        stage('nexus artifact upload') {
+            steps {
+                nexusArtifactUploader(
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                nexusUrl: '172.31.73.82:8081',
+                groupId: 'QA',
+                version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+                repository: 'vprofile',
+                credentialsId: 'nexus-login',
+                artifacts: [
+                  [artifactId: vproapp,
+                  classifier: '',
+                  file: 'target/vprofile-v2.war',
+                  type: 'war']
+                ]
+                )
+            }
+        }
         
     }
 }
