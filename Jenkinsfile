@@ -66,7 +66,6 @@ pipeline {
         stage('Build Image') {
             steps{
                 script{
-                    git checkout -b CI-docker
                     dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "dockerfile")
                 }
             }
